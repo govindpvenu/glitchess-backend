@@ -7,7 +7,8 @@ const notFound = (req: Request, res: Response, next: NextFunction) => {
 }
 
 //Used to no get html error msg of default error handler
-const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction): void => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const errorHandler = (err: Error, req: Request, res: Response, _next: NextFunction): void => {
     let statusCode = res.statusCode === 200 ? 500 : res.statusCode
     let message = err.message
     if (err.name === "CastError" && (err as any).kind === "ObjectId") {

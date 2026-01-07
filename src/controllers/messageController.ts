@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler"
-import { Request, Response, json } from "express"
+import { Request, Response } from "express"
 import Message from "../models/messageModel"
 import Conversation from "../models/conversationModel"
 import { getReceiverSocketId, io } from "../server"
@@ -18,9 +18,10 @@ const sendMessage = asyncHandler(async (req, res) => {
         })
 
         if (!conversation) {
-            conversation = await Conversation.create({
+            const newConversation = new Conversation({
                 participants: [senderId, receiverId],
             })
+            conversation = await newConversation.save()
         }
 
         const newMessage = new Message({
@@ -29,17 +30,20 @@ const sendMessage = asyncHandler(async (req, res) => {
             message,
         })
 
-        if (newMessage) {
+        if (newMessage && conversation) {
             conversation.messages.push(newMessage._id)
         }
 
         // this will run in parallel
-        await Promise.all([conversation.save(), newMessage.save()])
+        if (conversation) {
+            // @ts-expect-error - Mongoose type complexity issue
+            await Promise.all([conversation.save(), newMessage.save()])
+        }
 
         // SOCKET IO FUNCTIONALITY WILL GO HERE
         const receiverSocketId = getReceiverSocketId(receiverId)
         if (receiverSocketId) {
-            console.log("reveiving:",receiverSocketId)
+            console.log("reveiving:", receiverSocketId)
 
             // io.to(<socket_id>).emit() used to send events to specific client
             io.to(receiverSocketId).emit("newMessage", newMessage)

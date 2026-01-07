@@ -1,4 +1,4 @@
-import { Request, Response, json } from "express"
+import { Request, Response } from "express"
 import asyncHandler from "express-async-handler"
 import User from "../models/userModel"
 import generateToken from "../utils/generateToken"
@@ -28,7 +28,7 @@ const registerUser = asyncHandler(async (req: Request, res: Response) => {
     }
 
     generateToken(res, user._id.toString(), "user")
-    
+
     const generatedOTP = generateOTP()
 
     await sendEmail(email, generatedOTP)
@@ -164,24 +164,6 @@ const googleLogout = asyncHandler((req: Request, res: Response) => {
 })
 
 export { registerUser, authUser, verifyOtp, logoutUser, forgotPassword, resetPassword, resendOtp, googleLogout, googleSuccess }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //*@route POST /api
 //?@route POST /api

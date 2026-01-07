@@ -8,4 +8,6 @@ export default cleanEnv(process.env, {
     JWT_SECRET: str(),
     GOOGLE_CLIENT_ID: str(),
     GOOGLE_CLIENT_SECRET: str(),
+    EMAIL_USER: str(),
+    EMAIL_PASS: str(),
 })

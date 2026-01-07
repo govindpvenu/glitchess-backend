@@ -1,6 +1,6 @@
 import env from "../utils/validateEnv"
 import User from "../models/userModel"
-import { Request, Response, NextFunction } from "express"
+import { Request } from "express"
 import passport from "passport"
 const JwtStrategy = require("passport-jwt").Strategy
 

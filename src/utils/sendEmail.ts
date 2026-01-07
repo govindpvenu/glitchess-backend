@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer")
-
+import env from "./validateEnv"
 const sendEmail = async (email: string, generatedOTP: number): Promise<void> => {
     try {
         const transporter = nodemailer.createTransport({
@@ -8,12 +8,12 @@ const sendEmail = async (email: string, generatedOTP: number): Promise<void> => 
             secure: true,
             service: "Gmail",
             auth: {
-                user: "govindpvenu.txt@gmail.com",
-                pass: "dljr yzpc zanz jqfx",
+                user: env.EMAIL_USER,
+                pass: env.EMAIL_PASS,
             },
         })
         let mailOptions = {
-            from: "govindpvenu.txt@gmail.com",
+            from: env.EMAIL_USER,
             to: email,
             subject: "Otp for registration is: ",
             html: "<h3>OTP for account verification is </h3>" + "<h1 style='font-weight:bold;'>" + generatedOTP + "</h1>",

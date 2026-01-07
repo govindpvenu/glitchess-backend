@@ -1,4 +1,4 @@
-import e, { Request, Response, json } from "express"
+import { Request, Response } from "express"
 import asyncHandler from "express-async-handler"
 import User from "../models/userModel"
 
@@ -22,15 +22,13 @@ const getUsersForSidebar = async (req: Request, res: Response) => {
     }
 }
 
-
 //*@route PATCH /api/user/update-user
 const updateUser = asyncHandler(async (req: Request, res: Response) => {
     const loggedInUserId = (req.user as any)._id
-    await User.updateOne({ _id: loggedInUserId }, { username: req.body.userName,bio:req.body.bio })
+    await User.updateOne({ _id: loggedInUserId }, { username: req.body.userName, bio: req.body.bio })
     const user = await User.findOne({ _id: loggedInUserId })
     console.log(user)
     res.status(200).json(user)
 })
-
 
 export { getUsersForRanking, getUsersForSidebar, updateUser }

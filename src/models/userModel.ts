@@ -1,8 +1,7 @@
-import { Document, Schema, model, Model, InferSchemaType } from "mongoose"
+import { Document, Schema, model } from "mongoose"
 import bcrypt from "bcryptjs"
 
 interface UserDocument extends Document {
-    _id: string
     googleId?: string
     username: string
     email: string
@@ -15,7 +14,7 @@ interface UserDocument extends Document {
     draw?: number
     rating?: number
 
-    matchPassword: (enteredPassword: string) => Promise<boolean>
+    matchPassword: (_enteredPassword: string) => Promise<boolean>
 }
 
 const userSchema = new Schema<UserDocument>(
@@ -47,8 +46,7 @@ const userSchema = new Schema<UserDocument>(
         },
         bio: {
             type: String,
-            default:"No bio added",
-
+            default: "No bio added",
         },
         profile: {
             type: String,

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 import env from "./validateEnv"
-import { Request, Response } from "express"
+import { Response } from "express"
 
 const generateToken = (res: Response, userId: string, role: string): string => {
     const payload = {
