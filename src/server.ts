@@ -25,7 +25,7 @@ const server = http.createServer(app)
 export const io = new Server(server, {
     cors: {
         origin: [env.CLIENT_URL, "http://localhost:3000"],
-        methods: ["GET", "POST", "PUT", "DELETE"],
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
         credentials: true,
     },
 })
@@ -37,7 +37,7 @@ app.use(morgan("dev"))
 app.use(
     cors({
         origin: [env.CLIENT_URL, "http://localhost:3000"],
-        methods: ["GET", "POST", "PUT", "DELETE"],
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
         credentials: true,
     })
 )
