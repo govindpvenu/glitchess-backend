@@ -4,6 +4,7 @@ import User from "../models/userModel"
 import generateToken from "../utils/generateToken"
 import generateOTP from "../utils/generateOTP"
 import sendEmail from "../utils/sendEmail"
+import env from "../utils/validateEnv"
 
 //*@route POST /api/auth/register
 const registerUser = asyncHandler(async (req: Request, res: Response) => {
@@ -159,7 +160,7 @@ const googleSuccess = asyncHandler((req: Request, res: Response) => {
 const googleLogout = asyncHandler((req: Request, res: Response) => {
     req.logout((err) => {
         if (err) return res.status(500).send("Logout failed")
-        res.redirect("http://localhost:3000/login")
+        res.redirect(`${env.CLIENT_URL}/login`)
     })
 })
 
