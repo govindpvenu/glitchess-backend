@@ -31,10 +31,10 @@ io.on("connection", (socket: any) => {
         if (!room) {
             error = true
             message = "room does not exist"
-        } else if (room.length <= 0) {
+        } else if (room.players.length <= 0) {
             error = true
             message = "room is empty"
-        } else if (room.length >= 2) {
+        } else if (room.players.length >= 2) {
             error = true
             message = "room is full"
         }
