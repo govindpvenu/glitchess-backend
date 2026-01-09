@@ -155,6 +155,8 @@ const googleSuccess = asyncHandler((req: Request, res: Response) => {
     if (user) {
         generateToken(res, user._id.toString(), "user")
         res.status(200).json({ user })
+    } else {
+        res.status(401).json({ message: "Not authenticated" })
     }
 })
 
