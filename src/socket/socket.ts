@@ -12,7 +12,7 @@ io.on("connection", (socket: any) => {
     socket.on("createRoom", async (callback: any) => {
         const roomId = uuidV4()
         await socket.join(roomId)
-
+        console.log("roomId:", roomId)
         rooms.set(roomId, {
             roomId,
             players: [{ id: socket.id, username: socket.data?.username }],

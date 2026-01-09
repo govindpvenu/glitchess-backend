@@ -25,9 +25,13 @@ const server = http.createServer(app)
 export const io = new Server(server, {
     cors: {
         origin: ["http://localhost:3000"],
-        methods: ["GET", "POST"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true,
     },
 })
+
+// Initialize socket handlers after io is created
+require("./socket/socket")
 
 app.use(morgan("dev"))
 app.use(cors())
