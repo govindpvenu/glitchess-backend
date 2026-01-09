@@ -34,7 +34,13 @@ export const io = new Server(server, {
 require("./socket/socket")
 
 app.use(morgan("dev"))
-app.use(cors())
+app.use(
+    cors({
+        origin: [env.CLIENT_URL, "http://localhost:3000"],
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        credentials: true,
+    })
+)
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -46,14 +52,6 @@ app.use(
         cookie: {
             maxAge: 1000 * 60 * 60 * 24,
         },
-    })
-)
-
-app.use(
-    cors({
-        origin: [env.CLIENT_URL, "http://localhost:3000"],
-        methods: "GET,POST,PUT,DELETE",
-        credentials: true,
     })
 )
 
