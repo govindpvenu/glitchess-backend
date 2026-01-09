@@ -160,6 +160,25 @@ const googleSuccess = asyncHandler((req: Request, res: Response) => {
     }
 })
 
+//*@route GET /api/auth/auth/google/callback
+const googleCallback = asyncHandler((req: Request, res: Response) => {
+    const user: any = req.user
+    if (user) {
+        generateToken(res, user._id.toString(), "user")
+        // Encode user data in URL params for frontend to capture
+        const userData = encodeURIComponent(JSON.stringify({
+            _id: user._id,
+            username: user.username,
+            email: user.email,
+            profile: user.profile,
+            verified: user.verified,
+        }))
+        res.redirect(`${env.CLIENT_URL}/?googleAuth=${userData}`)
+    } else {
+        res.redirect(`${env.CLIENT_URL}/login?error=auth_failed`)
+    }
+})
+
 //*@route GET /api/auth/auth/google/logout
 const googleLogout = asyncHandler((req: Request, res: Response) => {
     req.logout((err) => {
@@ -168,7 +187,7 @@ const googleLogout = asyncHandler((req: Request, res: Response) => {
     })
 })
 
-export { registerUser, authUser, verifyOtp, logoutUser, forgotPassword, resetPassword, resendOtp, googleLogout, googleSuccess }
+export { registerUser, authUser, verifyOtp, logoutUser, forgotPassword, resetPassword, resendOtp, googleLogout, googleSuccess, googleCallback }
 
 //*@route POST /api
 //?@route POST /api

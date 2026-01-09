@@ -1,5 +1,5 @@
 import express from "express"
-import { registerUser, authUser, verifyOtp, logoutUser, forgotPassword, resetPassword, resendOtp, googleLogout, googleSuccess } from "../controllers/authController"
+import { registerUser, authUser, verifyOtp, logoutUser, forgotPassword, resetPassword, resendOtp, googleLogout, googleSuccess, googleCallback } from "../controllers/authController"
 import passport from "passport"
 import env from "../utils/validateEnv"
 
@@ -14,7 +14,7 @@ router.post("/forget-password", forgotPassword)
 router.patch("/reset-password", resetPassword)
 //Google Authentication
 router.get("/auth/google", passport.authenticate("google", { scope: ["email", "profile"] }))
-router.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: `${env.CLIENT_URL}/login`, successRedirect: `${env.CLIENT_URL}/` }))
+router.get("/auth/google/callback", passport.authenticate("google", { failureRedirect: `${env.CLIENT_URL}/login` }), googleCallback)
 router.get("/auth/google/logout", googleLogout)
 router.get("/auth/login/success", googleSuccess)
 
