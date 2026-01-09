@@ -13,7 +13,7 @@ const generateToken = (res: Response, userId: string, role: string): string => {
     res.cookie(role, token, {
         httpOnly: true,
         secure: true,
-        sameSite: "strict",
+        sameSite: "none",
         maxAge: 30 * 24 * 60 * 60 * 1000,
     })
 
