@@ -9,13 +9,16 @@ io.on("connection", (socket: any) => {
         socket.data.username = username
     })
 
-    socket.on("createRoom", async (callback: any) => {
+    socket.on("createRoom", async (data: any, callback: any) => {
         const roomId = uuidV4()
         await socket.join(roomId)
-        console.log("roomId:", roomId)
+        
+        // data contains the orientation chosen by the creator
+        const creatorOrientation = data?.orientation || "white"
+        
         rooms.set(roomId, {
             roomId,
-            players: [{ id: socket.id, username: socket.data?.username }],
+            players: [{ id: socket.id, username: socket.data?.username, orientation: creatorOrientation }],
         })
 
         callback(roomId)
