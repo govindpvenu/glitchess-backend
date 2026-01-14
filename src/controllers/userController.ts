@@ -8,6 +8,13 @@ const getUsersForRanking = asyncHandler(async (req, res) => {
     res.status(200).json(users)
 })
 
+//*@route GET /api/user/profile
+const getProfile = asyncHandler(async (req: Request, res: Response) => {
+    const loggedInUserId = (req.user as any)._id
+    const user = await User.findOne({ _id: loggedInUserId })
+    res.status(200).json(user)
+})
+
 //*@route PATCH /api/user/update-user
 const updateUser = asyncHandler(async (req: Request, res: Response) => {
     const loggedInUserId = (req.user as any)._id
@@ -17,4 +24,4 @@ const updateUser = asyncHandler(async (req: Request, res: Response) => {
     res.status(200).json(user)
 })
 
-export { getUsersForRanking, updateUser }
+export { getUsersForRanking, updateUser, getProfile }
