@@ -166,13 +166,21 @@ const googleCallback = asyncHandler((req: Request, res: Response) => {
     if (user) {
         generateToken(res, user._id.toString(), "user")
         // Encode user data in URL params for frontend to capture
-        const userData = encodeURIComponent(JSON.stringify({
-            _id: user._id,
-            username: user.username,
-            email: user.email,
-            profile: user.profile,
-            verified: user.verified,
-        }))
+        const userData = encodeURIComponent(
+            JSON.stringify({
+                _id: user._id,
+                username: user.username,
+                email: user.email,
+                profile: user.profile,
+                verified: user.verified,
+                bio: user.bio,
+                wins: user.wins,
+                draw: user.draw,
+                loss: user.loss,
+                rating: user.rating,
+                createdAt: user.createdAt,
+            })
+        )
         res.redirect(`${env.CLIENT_URL}/?googleAuth=${userData}`)
     } else {
         res.redirect(`${env.CLIENT_URL}/login?error=auth_failed`)
